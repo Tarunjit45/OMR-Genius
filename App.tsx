@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { ResultsView } from './components/ResultsView';
 import { analyzeOMR } from './services/geminiService';
 import { AnalysisResult } from './types';
-import { Loader2, ScanLine, AlertTriangle, FileCheck, Mail, User, Menu } from 'lucide-react';
+import { Loader2, ScanLine, AlertTriangle, FileCheck, Mail, User, Users, Activity, Zap } from 'lucide-react';
 
 const App: React.FC = () => {
   const [studentFile, setStudentFile] = useState<File | null>(null);
@@ -11,6 +11,24 @@ const App: React.FC = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Live Dashboard State - Realistic Numbers
+  const [activeUsers, setActiveUsers] = useState(1);
+  const [totalGraded, setTotalGraded] = useState(0);
+
+  // Simulate minimal visitor fluctuation (Mostly 1, sometimes 2 or 3)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // 80% chance to be 1, 20% chance to be 2 or 3
+      const random = Math.random();
+      if (random > 0.8) {
+         setActiveUsers(Math.floor(Math.random() * 2) + 2); // 2 or 3
+      } else {
+         setActiveUsers(1);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAnalyze = async () => {
     if (!studentFile || !keyFile) return;
@@ -21,6 +39,8 @@ const App: React.FC = () => {
     try {
       const data = await analyzeOMR(studentFile, keyFile);
       setResult(data);
+      // Increment total graded count on success
+      setTotalGraded(prev => prev + 1);
     } catch (err) {
       console.error(err);
       setError("Failed to analyze the OMR sheets. Please ensure images are clear and try again.");
@@ -40,10 +60,10 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 flex flex-col">
       
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 h-14 md:h-16 flex items-center justify-between">
           <div className="flex items-center space-x-2 md:space-x-3">
-            <div className="bg-indigo-600 p-1.5 md:p-2 rounded-lg">
+            <div className="bg-indigo-600 p-1.5 md:p-2 rounded-lg shadow-sm">
               <ScanLine className="w-5 h-5 md:w-6 md:h-6 text-white" />
             </div>
             <h1 className="text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">
@@ -52,13 +72,57 @@ const App: React.FC = () => {
           </div>
           <div className="flex items-center space-x-6 text-xs md:text-sm font-medium text-slate-500">
             <div className="flex items-center space-x-2 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
-              <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="hidden xs:inline">Gemini AI</span>
-              <span className="inline xs:hidden">AI</span>
+              <Zap className="w-3 h-3 md:w-4 md:h-4 text-amber-500 fill-amber-500" />
+              <span className="hidden xs:inline text-indigo-900 font-semibold">Gemini 3 Pro</span>
+              <span className="inline xs:hidden text-indigo-900 font-semibold">AI</span>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Live Dashboard Bar */}
+      <div className="bg-slate-900 text-white overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+          <div className="absolute -top-10 -left-10 w-40 h-40 bg-indigo-500 rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-0 w-60 h-60 bg-violet-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-4 py-3 relative z-10">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6">
+                <div className="flex items-center gap-2.5">
+                    <div className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                    </div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Live Dashboard</span>
+                </div>
+                
+                <div className="flex items-center gap-6 md:gap-12 w-full sm:w-auto justify-center sm:justify-end">
+                    <div className="flex items-center gap-3">
+                        <div className="p-1.5 bg-white/10 rounded-lg">
+                           <Users className="w-4 h-4 text-indigo-300" />
+                        </div>
+                        <div className="flex flex-col leading-none">
+                            <span className="font-bold text-white text-base tabular-nums">{activeUsers}</span>
+                            <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Users Online</span>
+                        </div>
+                    </div>
+                    
+                    <div className="w-px h-8 bg-white/10"></div>
+
+                    <div className="flex items-center gap-3">
+                        <div className="p-1.5 bg-white/10 rounded-lg">
+                           <Activity className="w-4 h-4 text-indigo-300" />
+                        </div>
+                        <div className="flex flex-col leading-none">
+                            <span className="font-bold text-white text-base tabular-nums">{totalGraded.toLocaleString()}</span>
+                            <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Sheets Graded</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
 
       <main className="max-w-6xl mx-auto px-4 py-6 md:py-12 flex-grow w-full">
         
