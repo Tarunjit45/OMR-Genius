@@ -1,0 +1,5 @@
+{
+  "name": "OMR Genius",
+  "description": "An AI-powered OMR sheet grader. Upload a student's OMR sheet and an answer key to instantly calculate marks with negative marking support.",
+  "requestFramePermissions": []
+}
