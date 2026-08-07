@@ -1,44 +1,71 @@
-# OMR Genius
+# Omr Genius
 
-**OMR Genius** is an AI-powered Optical Mark Recognition (OMR) application designed to instantly grade student answer sheets against a correct answer key. 
+[![GitHub License](https://img.shields.io/github/license/Tarunjit45/OMR-Genius?style=flat-square)](LICENSE)
+[![CI / Quality Check](https://github.com/Tarunjit45/OMR-Genius/actions/workflows/ci.yml/badge.svg)](https://github.com/Tarunjit45/OMR-Genius/actions)
+[![Language](https://img.shields.io/badge/Language-JavaScript/TypeScript-blue?style=flat-square)](https://github.com/Tarunjit45/OMR-Genius)
 
-Powered by **Google Gemini 3 Pro Vision**, it analyzes handwritten or printed OMR sheets, compares them with the key, and calculates scores with support for negative marking.
-
-![App Screenshot](https://via.placeholder.com/800x400?text=OMR+Genius+App+Preview)
-
-## 🚀 Features
-
-- **AI-Powered Analysis**: Uses advanced computer vision (Gemini 3 Pro) to accurately detect marked bubbles.
-- **Instant Grading**: Upload a student sheet and an answer key to get results in seconds.
-- **Automated Scoring Logic**: 
-  - ✅ **Correct Answer**: +1 Mark
-  - ❌ **Wrong Answer**: -0.25 Marks (Negative Marking)
-  - ⚪ **Unattempted**: 0 Marks
-- **Detailed Analytics**: 
-  - Interactive Pie Charts for performance overview.
-  - Question-wise breakdown table.
-  - Summary cards for total score, correct, wrong, and unattempted counts.
-- **Mobile Responsive**: Fully optimized layout for desktops, tablets, and mobile phones.
-
-## 🛠️ Tech Stack
-
-- **Frontend**: React 19, TypeScript, Vite
-- **Styling**: Tailwind CSS
-- **AI/ML**: Google GenAI SDK (`gemini-3-pro-preview`)
-- **Visualization**: Recharts
-- **Icons**: Lucide React
-
-## 📋 Usage
-
-1. **Upload Student Sheet**: Select or drag & drop the image of the student's filled OMR sheet.
-2. **Upload Answer Key**: Select or drag & drop the image of the correct answer key.
-3. **Analyze**: Click "Calculate Marks".
-4. **View Results**: Review the score, graphical analysis, and question-by-question breakdown.
-
-## 👤 Author
-
-**Tarunjit Biswas**  
-Email: [tarunjitbiswas24@gmail.com](mailto:tarunjitbiswas24@gmail.com)
+A modern, high-performance open-source project built with JavaScript/TypeScript. Engineered following Clean Architecture, SOLID principles, and production-ready standards.
 
 ---
-*Built with ❤️ using Google Gemini API*
+
+## 🌟 Key Features
+
+- **Robust Architecture:** Modular and clean separation of concerns.
+- **Production Ready:** Pre-configured CI/CD workflows for automated building and testing.
+- **Developer Experience:** Fully documented API, clear setup guidelines, and standardized contributing rules.
+- **Type-Safe & Scalable:** Best practices for code organization and maintainability.
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Modern runtime environment (JavaScript/TypeScript)
+- Git
+
+### Installation
+
+```bash
+git clone https://github.com/Tarunjit45/OMR-Genius.git
+cd OMR-Genius
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run Project
+
+```bash
+npm run dev # or npm start
+```
+
+### Run Tests
+
+```bash
+npm test
+```
+
+---
+
+## 🗺️ Roadmap & Future Enhancements
+
+- [x] Initial architecture & core features
+- [x] Standardized open-source governance & CI/CD
+- [ ] Automated end-to-end test expansion
+- [ ] Production deployment & release tags
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE OF CONDUCT](CODE_OF_CONDUCT.md) before submitting Pull Requests.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
